@@ -2,8 +2,8 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from '../src/app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { ExpressAdapter } from '@nestjs/platform-express';
-import * as express from 'express';
-import * as cookieParser from 'cookie-parser';
+import express from 'express';
+import cookieParser from 'cookie-parser';
 
 // Create Express instance
 const expressApp = express();
@@ -15,13 +15,13 @@ async function createNestApp() {
   if (!app) {
     const adapter = new ExpressAdapter(expressApp);
     app = await NestFactory.create(AppModule, adapter);
-
+    
     // Get configuration
     const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
-
+    
     // Add cookie-parser middleware
     app.use(cookieParser());
-
+    
     // Enable CORS
     app.enableCors({
       origin: [frontendUrl],
@@ -29,7 +29,7 @@ async function createNestApp() {
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
       allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
     });
-
+    
     // Global validation pipe
     app.useGlobalPipes(
       new ValidationPipe({
@@ -38,10 +38,10 @@ async function createNestApp() {
         transform: true,
       }),
     );
-
+    
     // Set global prefix
     app.setGlobalPrefix('api');
-
+    
     // Initialize the app
     await app.init();
   }

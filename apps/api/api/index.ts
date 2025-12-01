@@ -6,7 +6,7 @@ import { ExpressAdapter } from '@nestjs/platform-express';
 import * as express from 'express';
 
 // Create Express instance
-const expressApp = express();
+const expressApp = express.default();
 
 // Create NestJS app with Express adapter for serverless
 let app: any;
@@ -20,7 +20,7 @@ async function createNestApp() {
     const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
 
     // Add cookie-parser middleware
-    app.use(cookieParser());
+    app.use(cookieParser.default());
 
     // Enable CORS
     app.enableCors({

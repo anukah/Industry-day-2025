@@ -79,8 +79,8 @@ export class UserService {
       newPublicId = uploadResult.public_id;
       newSecureUrl = uploadResult.secure_url;
 
-      user.profile_picture = newSecureUrl;
-      user.profile_picture_public_id = newPublicId;
+      user.profile_picture = uploadResult.secure_url;
+      user.profile_picture_public_id = uploadResult.public_id;
 
       const updatedUser = await queryRunner.manager.save(User, user);
 
